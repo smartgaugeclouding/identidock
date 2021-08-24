@@ -7,7 +7,6 @@
        "deb [arch=amd64] https://download.docker.com/linux/debian \
        $(lsb_release -cs) \
        stable"
-    RUN apt-get update  -qq \
-        && apt-get install docker-ce=17.12.1~ce-0~debian -y     
-    USER jenkins
+    RUN apt-get update  -qq  && apt-get install docker-ce=17.12.1~ce-0~debian -y     
+    RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
     
