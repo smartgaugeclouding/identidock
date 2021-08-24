@@ -1,12 +1,13 @@
-    FROM jenkins/jenkins:lts
-    USER root
-    RUN apt-get update -qq \
-        && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common
-    RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
-    RUN add-apt-repository \
-       "deb [arch=amd64] https://download.docker.com/linux/debian \
-       $(lsb_release -cs) \
-       stable"
-    RUN apt-get update  -qq  && apt-get install docker-ce=17.12.1~ce-0~debian -y     
-    RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+FROM jenkins:1.609.3
+USER root
+RUN echo "deb http://apt.dockerproject.org/repo debian-jessie main" \ > /etc/apt/sources.list.d/docker.list \
+&& apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 \ --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
+&& apt-get update \
+&& apt-get install -y apt-transport-https \ && apt-get install -y sudo \
+&& apt-get install -y docker-engine \
+&& rm -rf /var/lib/apt/lists/*
+RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+USER jenkins
+    
+
     
