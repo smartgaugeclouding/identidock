@@ -7,5 +7,6 @@ COPY cmd.sh /
 RUN pip install -r requirements.txt
 EXPOSE 9090 9191
 USER uwsgi
+DOCKER_HOST tcp://localhost:5000
 CMD ["/cmd.sh"]
 
